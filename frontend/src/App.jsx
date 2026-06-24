@@ -117,7 +117,7 @@ const TreeNode = ({ nodeName, childrenObj, isLast = false, isRoot = false }) => 
 // Main App Component
 export default function App() {
   const [inputText, setInputText] = useState('A->B\nA->C\nB->D\nB->E');
-  const [apiUrl, setApiUrl] = useState('http://localhost:4000/bfhl');
+  const [apiUrl, setApiUrl] = useState(import.meta.env.VITE_API_URL || 'http://localhost:4000/bfhl');
   const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

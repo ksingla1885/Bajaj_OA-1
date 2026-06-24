@@ -230,7 +230,15 @@ app.post('/bfhl', (req, res) => {
 
 // Root check endpoint
 app.get('/', (req, res) => {
-  res.send('Graph Analyzer API is running.');
+  res.json({
+    status: "healthy",
+    message: "Chitkara Hierarchy API is active.",
+    identity: {
+      user_id: "ketankumar_24062026",
+      email_id: "ketan0546.be23@chitkara.edu.in",
+      college_roll_number: "2310990546"
+    }
+  });
 });
 
 const PORT = process.env.PORT || 4000;
