@@ -200,9 +200,9 @@ app.post('/bfhl', (req, res) => {
 
     // Send response
     res.json({
-      user_id: "ketan_shah_24062026",
-      email_id: "ketan.shah@college.edu",
-      college_roll_number: "22BCS10234",
+      user_id: "ketankumar_24062026",
+      email_id: "ketan0546.be23@chitkara.edu.in",
+      college_roll_number: "2310990546",
       hierarchies,
       invalid_entries,
       duplicate_edges,
@@ -227,7 +227,7 @@ app.get('/', (req, res) => {
   res.send('Graph Analyzer API is running.');
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Backend server running on port ${PORT}`);
 });
