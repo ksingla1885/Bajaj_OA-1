@@ -30,8 +30,11 @@ app.post('/bfhl', (req, res) => {
         continue;
       }
 
+      // Trim whitespace first, then validate
+      const trimmed = item.trim();
+
       // Valid format: X->Y (X, Y are uppercase letters, no self loops)
-      const match = item.match(/^([A-Z])->([A-Z])$/);
+      const match = trimmed.match(/^([A-Z])->([A-Z])$/);
       if (!match) {
         invalid_entries.push(item);
         continue;
@@ -70,10 +73,17 @@ app.post('/bfhl', (req, res) => {
     const adjacencyList = {};
     const parentCount = {};
     const all_nodes = new Set();
+    const nodes_in_order = [];
 
     for (const edge of processed_edges) {
-      all_nodes.add(edge.u);
-      all_nodes.add(edge.v);
+      if (!all_nodes.has(edge.u)) {
+        all_nodes.add(edge.u);
+        nodes_in_order.push(edge.u);
+      }
+      if (!all_nodes.has(edge.v)) {
+        all_nodes.add(edge.v);
+        nodes_in_order.push(edge.v);
+      }
     }
 
     for (const node of all_nodes) {
@@ -100,7 +110,7 @@ app.post('/bfhl', (req, res) => {
     const visited = new Set();
     const components = [];
 
-    for (const node of all_nodes) {
+    for (const node of nodes_in_order) {
       if (!visited.has(node)) {
         const component = [];
         const queue = [node];
@@ -161,8 +171,7 @@ app.post('/bfhl', (req, res) => {
         hierarchies.push({
           root,
           tree,
-          depth,
-          has_cycle: false
+          depth
         });
 
         tree_details.push({ root, depth });
@@ -181,9 +190,6 @@ app.post('/bfhl', (req, res) => {
         total_cycles++;
       }
     }
-
-    // Sort hierarchies lexicographically by root
-    hierarchies.sort((a, b) => a.root.localeCompare(b.root));
 
     // Step 9: Determine largest tree root
     let largest_tree_root = "";
